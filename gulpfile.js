@@ -34,7 +34,9 @@ gulp.task('copy:doc:files', function () {});
 
 gulp.task('watch', ['watch:sass', 'watch:doc']);
 
-gulp.task('watch:sass');
+gulp.task('watch:sass', function () {
+    return gulp.watch('./**/*.scss', ['sass'])
+});
 
 gulp.task('watch:doc');
 
