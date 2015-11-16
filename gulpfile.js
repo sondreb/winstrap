@@ -9,7 +9,8 @@ var gulp = require('gulp'),
 
 var settings = {
     source: 'src',
-    destination: 'distgulp'
+    destination: 'distgulp',
+    gruntdestination: 'dist'
 }
 
 function getSourcePath() {
@@ -32,6 +33,7 @@ var paths = {
     },
    
     target: {
+       gruntroot: getSourcePath(settings.gruntdestination),
        root: getSourcePath(settings.destination),
        styles: getSourcePath(settings.destination, 'css'),
        assets: {
@@ -41,9 +43,12 @@ var paths = {
     }
 }
 
-gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint']);
+gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint', 'grunt']);
 
-gulp.task('clean', function () { });
+gulp.task('clean', function () { 
+    return gulp.src([paths.target.root, paths.target.gruntroot], { read: false})
+        .pipe($.clean());
+});
 
 gulp.task('sass', function () {
     return gulp.src(paths.source.style)
@@ -88,6 +93,15 @@ gulp.task('watch:doc');
 gulp.task('fileExists', function() {});
 
 gulp.task('jshint', function() {});
+
+gulp.task('grunt', function(cb) {
+  var exec = require('child_process').exec;
+  exec('grunt', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
+});
 
 gulp.task('compare', function() {
    return gulp.src('./dist/**/*.*')
