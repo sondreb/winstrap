@@ -12,26 +12,30 @@ var settings = {
     destination: 'distgulp'
 }
 
+function getSourcePath() {
+    var args = Array.prototype.slice.call(arguments).join(',');
+    return path.join(__dirname, args);    
+}
+
 var paths = {
-    node: path.join(__dirname, 'node_modules'),
+    node: getSourcePath('node_modules'),
     source: {
-        style:  path.join(__dirname, settings.source, 'scss', 'winstrap.scss'),
-        styles:  path.join(__dirname, settings.source, '**/*.scss'),
+        style:  getSourcePath(settings.source, 'scss', 'winstrap.scss'),
+        styles:  getSourcePath(settings.source, '**/*.scss'),
         assets: {
-            fonts: path.join(__dirname, settings.source, 'fonts/**/*.*'),
-            images: path.join(__dirname, settings.source, 'images/**/*.*')
+            fonts: getSourcePath(settings.source, 'fonts/**/*.*'),
+            images: getSourcePath(settings.source, 'images/**/*.*')
         }
     },
    
     target: {
-       root: path.join(__dirname, settings.destination),
-       styles: path.join(__dirname, settings.destination, 'css'),
+       root: getSourcePath(settings.destination),
+       styles: getSourcePath(settings.destination, 'css'),
        assets: {
-           fonts: path.join(__dirname, settings.destination, 'fonts'),
-           images: path.join(__dirname, settings.destination, 'images') 
+           fonts: getSourcePath(settings.destination, 'fonts'),
+           images: getSourcePath(settings.destination, 'images') 
        }
     }
-    
 }
 
 gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint']);
