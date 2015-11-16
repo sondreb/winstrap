@@ -47,7 +47,7 @@ gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint
 
 gulp.task('clean', function () { 
     return gulp.src([paths.target.root, paths.target.gruntroot], { read: false})
-        .pipe($.clean());
+        .pipe($.rimraf());
 });
 
 gulp.task('sass', function () {
