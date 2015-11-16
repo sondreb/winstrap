@@ -5,7 +5,7 @@
 [Nn]ode_modules/*
 [Bb]ower_components/*
 dist/
-gulpdist/
+distgulp/
 
 # User-specific files
 *.suo

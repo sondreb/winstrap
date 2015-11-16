@@ -14,7 +14,7 @@ gulp.task('sass', function () {
     return gulp.src('./src/scss/winstrap.scss')
         .pipe($.sourcemaps.init())
         .pipe($.sass({ outputStyle: 'nested', precision: 5, includePaths:['node_modules'] }).on('error', $.sass.logError))
-        .pipe($.sourcemaps.write())
+        .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest('./distgulp/css'));
 });
 
@@ -37,3 +37,9 @@ gulp.task('watch', ['watch:sass', 'watch:doc']);
 gulp.task('watch:sass');
 
 gulp.task('watch:doc');
+
+gulp.task('compare', function() {
+   return gulp.src('./dist/**/*.*')
+        .pipe($.diff('./distgulp'))
+        .pipe($.diff.reporter({fail:true})); 
+});

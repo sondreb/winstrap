@@ -25,19 +25,6 @@
   },
   "devDependencies": {
     "bower": "",
-    "gulp": "3.9.0",
-    
-    "gulp-concat": "2.6.0",
-    "gulp-rename": "1.2.2",
-    "gulp-sass": "2.1.0",
-    "gulp-sourcemaps": "1.6.0",
-    "gulp-uglify": "1.4.2",
-    "gulp-util": "3.0.7",
-    "gulp-watch": "4.3.5",
-    "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0",
-    "gulp-load-plugins": "1.0.0",
-
     "grunt": "^0.4.5",
     "grunt-assemble": "^0.4.0",
     "grunt-bump": "^0.3.1",
@@ -49,7 +36,19 @@
     "grunt-file-exists": "^0.1.2",
     "grunt-notify": "^0.4.1",
     "grunt-sass": "^1.0.0",
-    "jshint-stylish": "^2.0.0"
+    "gulp": "3.9.0",
+    "gulp-concat": "2.6.0",
+    "gulp-diff": "^1.0.0",
+    "gulp-load-plugins": "1.0.0",
+    "gulp-rename": "1.2.2",
+    "gulp-sass": "2.1.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-uglify": "1.4.2",
+    "gulp-util": "3.0.7",
+    "gulp-watch": "4.3.5",
+    "jshint-stylish": "^2.0.0",
+    "vinyl-buffer": "1.0.0",
+    "vinyl-source-stream": "1.1.0"
   },
   "bugs": {
     "url": "https://github.com/winjs/winstrap/issues"
