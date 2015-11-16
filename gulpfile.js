@@ -12,18 +12,23 @@ var settings = {
     destination: 'distgulp'
 }
 
+function getSourcePath() {
+    var args = Array.prototype.slice.call(arguments).join(',');
+    return path.join(__dirname, args);    
+}
+
 var paths = {
-    node: path.join(__dirname, 'node_modules'),
+    node: getSourcePath('node_modules'),
     source: {
-        style:  path.join(__dirname, settings.source, 'scss', 'winstrap.scss'),
-        styles:  path.join(__dirname, settings.source, '**/*.scss'),
+        fonts:  getSourcePath(settings.source, 'scss', 'winstrap.scss'), 
+        style:  getSourcePath(settings.source, 'scss', 'winstrap.scss'),
+        styles:  getSourcePath(settings.source, '**/*.scss'),
     },
    
     target: {
-       root: path.join(__dirname, settings.destination),
-       styles: path.join(__dirname, settings.destination, 'css'),
+       root: getSourcePath(settings.destination),
+       styles: getSourcePath(settings.destination, 'css'),
     }
-    
 }
 
 gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint']);
