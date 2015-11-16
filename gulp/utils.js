@@ -8,7 +8,7 @@ var paths = {
 
 function getPath() {
     
-    var fullPath = __dirname;
+    var fullPath = path.join(__dirname, '..');
     
     for (var i = 0; i < arguments.length; i++) {
         fullPath = path.join(fullPath, arguments[i]);
@@ -18,7 +18,7 @@ function getPath() {
 
 function getSourcePath() {
     
-     var fullPath = path.join(__dirname, paths.sourcePath);
+     var fullPath = path.join(__dirname, '..', paths.sourcePath);
     
     for (var i = 0; i < arguments.length; i++) {
         fullPath = path.join(fullPath, arguments[i]);
@@ -28,7 +28,7 @@ function getSourcePath() {
 
 function getTargetPath() {
     
-    var fullPath = path.join(__dirname, paths.destinationPath);
+    var fullPath = path.join(__dirname, '..', paths.destinationPath);
     
     for (var i = 0; i < arguments.length; i++) {
         fullPath = path.join(fullPath, arguments[i]);

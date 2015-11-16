@@ -55,6 +55,9 @@
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0"
   },
+  "optionalDependencies": {
+    "browser-sync": "2.10.0"
+  },
   "bugs": {
     "url": "https://github.com/winjs/winstrap/issues"
   },

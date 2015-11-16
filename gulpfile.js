@@ -7,10 +7,38 @@ var gulp = require('gulp'),
     utils = require('./gulp/utils'),
     paths = require('./gulp/paths'),
     source = require('vinyl-source-stream'),
-    $ = require('gulp-load-plugins')({ pattern: ['*'], rename: { 'assemble': '_assemble' } });
+    $ = require('gulp-load-plugins')({ 
+            pattern: ['*'], 
+            scope: ['devDependencies', 'optionalDependencies'],
+            rename: { 'assemble': '_assemble' } });
 
 gulp.task('default', function (callback) {
     $.runSequence('clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint', 'grunt', callback);
+});
+
+gulp.task('server', function() {
+    
+        var files = [
+            paths.target.root + '**/*.html',
+            paths.target.root + '**/*.css',
+            paths.target.root + '**/*.png',
+            paths.target.root + '**/*.js',
+            paths.target.root + '**/*.svg'
+        ];
+    
+        $.browserSync.init(files, {
+        server: paths.target.root,
+        port: 9001,
+        https: false,
+        ghostMode: {
+            clicks: true,
+            forms: true,
+            scroll: true
+        },
+        ui: { port: (9002) },
+        browser: "google chrome"
+    });
+    
 });
 
 gulp.task('clean', function () { 
