@@ -11,11 +11,10 @@ http://nodejs.org/download/
 
 Make sure Node.js is available in your path.
 
-### Install Grunt and Bower
+### Install Gulp
 
 ```
-npm install -g grunt-cli
-npm install -g bower
+npm install -g gulp-cli
 ```
 
 ### Clone the repo
@@ -33,7 +32,6 @@ To install the required `npm` packages:
 ```
 cd winstrap
 npm install
-bower install
 ```
 
 ## Building Winstrap
@@ -41,7 +39,7 @@ bower install
 Just run:
 
 ```
-grunt
+gulp
 ```
 
 This will compile the generated files into the `dist` folder.
@@ -51,7 +49,7 @@ This will compile the generated files into the `dist` folder.
 Just run this task to display the demo pages in your browser:
 
 ```
-grunt server
+gulp server
 ```
 
 Launch this URL in your brower: http://localhost:9001/
