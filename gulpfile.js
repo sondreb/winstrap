@@ -4,8 +4,8 @@
 var gulp = require('gulp'),
     fs = require('fs'),
     path = require('path'),
-    utils = require('./utils'),
-    paths = require('./paths'),
+    utils = require('./gulp/utils'),
+    paths = require('./gulp/paths'),
     source = require('vinyl-source-stream'),
     $ = require('gulp-load-plugins')({ pattern: ['*'], rename: { 'assemble': '_assemble' } });
 
@@ -29,7 +29,8 @@ gulp.task('sass', function () {
 gulp.task('assemble', ['assemble:pages']);
 
 gulp.task('assemble:pages', function() {
-    return gulp.src([paths.source.pages.root])
+    
+    return gulp.src(paths.source.pages.root)
         .pipe($.assemble($._assemble, {
             partials: [paths.source.pages.partials],
             layout: [paths.source.pages.layouts],
@@ -38,10 +39,10 @@ gulp.task('assemble:pages', function() {
             data: paths.source.pages.data,
     
             // Set the version number
-            version: '<%= pkg.version %>',
+            version: '1.0',
     
             // Name of the project
-            name: '<%= pkg.name %>',
+            name: 'winstrap',
         }))
         .pipe(gulp.dest(paths.target.pages));
 });
