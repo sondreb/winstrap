@@ -29,7 +29,15 @@ var paths = {
         assets: {
             fonts: getSourcePath(settings.source, 'fonts/**/*.*'),
             images: getSourcePath(settings.source, 'images/**/*.*')
-        }
+        },
+        doc: {
+           js: getSourcePath(settings.source, '**/*.js'),
+           jsvendor: [
+               getSourcePath('node_modules', 'jquery', 'dist', 'jquery.min.js'), 
+               getSourcePath('node_modules', 'jquery', 'dist', 'jquery.min.map'),
+               getSourcePath('node_modules', 'bootstrap-sass', 'assets', 'javascripts', '**/*.*')
+           ]
+        } 
     },
    
     target: {
@@ -39,6 +47,10 @@ var paths = {
        assets: {
            fonts: getSourcePath(settings.destination, 'fonts'),
            images: getSourcePath(settings.destination, 'images') 
+       },
+       doc: {
+           js: getSourcePath(settings.destination),
+           jsvendor: getSourcePath(settings.destination, 'js', 'vendor')
        }
     }
 }
@@ -64,23 +76,29 @@ gulp.task('assemble:pages', function() {});
 
 gulp.task('copy', ['copy:assets', 'copy:doc']);
 
-gulp.task('copy:assets', ['copy:assets:files']);
+gulp.task('copy:assets', ['copy:assets:fonts', 'copy:assets:images']);
 
-gulp.task('copy:assets:files', ['copy:assets:files:fonts', 'copy:assets:files:images']);
-
-gulp.task('copy:assets:files:fonts', function () {
+gulp.task('copy:assets:fonts', function () {
     return gulp.src(paths.source.assets.fonts)
         .pipe(gulp.dest(paths.target.assets.fonts));
 });
 
-gulp.task('copy:assets:files:images', function () {
+gulp.task('copy:assets:images', function () {
     return gulp.src(paths.source.assets.images)
         .pipe(gulp.dest(paths.target.assets.images));
 });
 
-gulp.task('copy:doc', ['copy:doc:files']);
+gulp.task('copy:doc', ['copy:doc:js', 'copy:doc:jsvendor']);
 
-gulp.task('copy:doc:files', function () {});
+gulp.task('copy:doc:js', function () {
+   return gulp.src(paths.source.doc.js)
+        .pipe(gulp.dest(paths.target.doc.js)); 
+});
+
+gulp.task('copy:doc:jsvendor', function() {
+   return gulp.src(paths.source.doc.jsvendor)
+        .pipe(gulp.dest(paths.target.doc.jsvendor)); 
+});
 
 gulp.task('watch', ['watch:sass', 'watch:doc']);
 
