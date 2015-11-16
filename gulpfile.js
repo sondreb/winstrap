@@ -4,58 +4,50 @@
 var gulp = require('gulp'),
     fs = require('fs'),
     path = require('path'),
+    utils = require('./utils'),
     source = require('vinyl-source-stream'),
     $ = require('gulp-load-plugins')({ pattern: ['*'] });
 
-var settings = {
-    source: 'src',
-    destination: 'distgulp',
-    gruntdestination: 'dist'
-}
-
-function getSourcePath() {
-    var fullPath = __dirname;
-    for (var i = 0; i < arguments.length; i++) {
-        fullPath = path.join(fullPath, arguments[i]);
-    }
-    return fullPath;
-}
+// Until we remove dual gulp compile, we must override this setting.
+utils.paths.destinationPath = 'distgulp';
 
 var paths = {
-    node: getSourcePath('node_modules'),
+    node: utils.getPath('node_modules'),
     source: {
-        style:  getSourcePath(settings.source, 'scss', 'winstrap.scss'),
-        styles:  getSourcePath(settings.source, '**/*.scss'),
+        style:  utils.getSourcePath('scss', 'winstrap.scss'),
+        styles:  utils.getSourcePath('**/*.scss'),
         assets: {
-            fonts: getSourcePath(settings.source, 'fonts/**/*.*'),
-            images: getSourcePath(settings.source, 'images/**/*.*')
+            fonts: utils.getSourcePath('fonts/**/*.*'),
+            images: utils.getSourcePath('images/**/*.*')
         },
         doc: {
-           js: getSourcePath(settings.source, '**/*.js'),
+           js: utils.getSourcePath('js', '**/*.js'),
            jsvendor: [
-               getSourcePath('node_modules', 'jquery', 'dist', 'jquery.min.js'), 
-               getSourcePath('node_modules', 'jquery', 'dist', 'jquery.min.map'),
-               getSourcePath('node_modules', 'bootstrap-sass', 'assets', 'javascripts', 'bootstrap.min.js')
+               utils.getPath('node_modules', 'jquery', 'dist', 'jquery.min.js'), 
+               utils.getPath('node_modules', 'jquery', 'dist', 'jquery.min.map'),
+               utils.getPath('node_modules', 'bootstrap-sass', 'assets', 'javascripts', 'bootstrap.min.js')
            ]
         } 
     },
    
     target: {
-       gruntroot: getSourcePath(settings.gruntdestination),
-       root: getSourcePath(settings.destination),
-       styles: getSourcePath(settings.destination, 'css'),
+       gruntroot: utils.getPath('dist'), // Temporary
+       root: utils.getTargetPath(),
+       styles: utils.getTargetPath('css'),
        assets: {
-           fonts: getSourcePath(settings.destination, 'fonts'),
-           images: getSourcePath(settings.destination, 'images') 
+           fonts: utils.getTargetPath('fonts'),
+           images: utils.getTargetPath('images') 
        },
        doc: {
-           js: getSourcePath(settings.destination),
-           jsvendor: getSourcePath(settings.destination, 'js', 'vendor')
+           js: utils.getTargetPath('js'),
+           jsvendor: utils.getTargetPath('js', 'vendor')
        }
     }
 }
 
-gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint', 'grunt']);
+gulp.task('default', function (callback) {
+    $.runSequence('clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint', 'grunt', callback);
+});
 
 gulp.task('clean', function () { 
     return gulp.src([paths.target.root, paths.target.gruntroot], { read: false})
@@ -126,3 +118,6 @@ gulp.task('compare', function() {
         .pipe($.diff('./distgulp'))
         .pipe($.diff.reporter({fail:true})); 
 });
+
+
+

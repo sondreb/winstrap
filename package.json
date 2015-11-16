@@ -49,7 +49,8 @@
     "gulp-watch": "4.3.5",
     "jshint-stylish": "^2.0.0",
     "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0"
+    "vinyl-source-stream": "1.1.0",
+    "run-sequence": "1.1.2"
   },
   "bugs": {
     "url": "https://github.com/winjs/winstrap/issues"
