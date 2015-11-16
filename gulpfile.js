@@ -35,7 +35,7 @@ var paths = {
            jsvendor: [
                getSourcePath('node_modules', 'jquery', 'dist', 'jquery.min.js'), 
                getSourcePath('node_modules', 'jquery', 'dist', 'jquery.min.map'),
-               getSourcePath('node_modules', 'bootstrap-sass', 'assets', 'javascripts', '**/*.*')
+               getSourcePath('node_modules', 'bootstrap-sass', 'assets', 'javascripts', 'bootstrap.min.js')
            ]
         } 
     },
