@@ -13,8 +13,11 @@ var settings = {
 }
 
 function getSourcePath() {
-    var args = Array.prototype.slice.call(arguments).join(',');
-    return path.join(__dirname, args);    
+    var fullPath = __dirname;
+    for (var i = 0; i < arguments.length; i++) {
+        fullPath = path.join(fullPath, arguments[i]);
+    }
+    return fullPath;
 }
 
 var paths = {
