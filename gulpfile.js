@@ -1,3 +1,4 @@
+/* global __dirname */
 'use strict';
 
 var gulp = require('gulp'),
@@ -6,16 +7,35 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     $ = require('gulp-load-plugins')({ pattern: ['*'] });
 
+var settings = {
+    source: 'src',
+    destination: 'distgulp'
+}
+
+var paths = {
+    node: path.join(__dirname, 'node_modules'),
+    source: {
+        style:  path.join(__dirname, settings.source, 'scss', 'winstrap.scss'),
+        styles:  path.join(__dirname, settings.source, '**/*.scss'),
+    },
+   
+    target: {
+       root: path.join(__dirname, settings.destination),
+       styles: path.join(__dirname, settings.destination, 'css'),
+    }
+    
+}
+
 gulp.task('default', ['clean', 'sass', 'assemble', 'copy', 'fileExists', 'jshint']);
 
 gulp.task('clean', function () { });
 
 gulp.task('sass', function () {
-    return gulp.src('./src/scss/winstrap.scss')
+    return gulp.src(paths.source.style)
         .pipe($.sourcemaps.init())
-        .pipe($.sass({ outputStyle: 'nested', precision: 5, includePaths:['node_modules'] }).on('error', $.sass.logError))
+        .pipe($.sass({ outputStyle: 'nested', precision: 5, includePaths:[paths.node] }).on('error', $.sass.logError))
         .pipe($.sourcemaps.write('.'))
-        .pipe(gulp.dest('./distgulp/css'));
+        .pipe(gulp.dest(paths.target.styles));
 });
 
 gulp.task('assemble', ['assemble:pages']);
@@ -26,7 +46,12 @@ gulp.task('copy', ['copy:assets', 'copy:doc']);
 
 gulp.task('copy:assets', ['copy:assets:files']);
 
-gulp.task('copy:assets:files', function () {});
+gulp.task('copy:assets:files', function () {
+    
+    
+    
+    
+});
 
 gulp.task('copy:doc', ['copy:doc:files']);
 
@@ -35,7 +60,7 @@ gulp.task('copy:doc:files', function () {});
 gulp.task('watch', ['watch:sass', 'watch:doc']);
 
 gulp.task('watch:sass', function () {
-    return gulp.watch('./**/*.scss', ['sass'])
+    return gulp.watch(paths.source.styles, ['sass'])
 });
 
 gulp.task('watch:doc');
