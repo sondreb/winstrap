@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     path = require('path'),
     utils = require('./utils'),
     source = require('vinyl-source-stream'),
-    $ = require('gulp-load-plugins')({ pattern: ['*'] });
+    $ = require('gulp-load-plugins')({ pattern: ['*'], rename: { 'assemble': '_assemble' } });
 
 // Until we remove dual gulp compile, we must override this setting.
 utils.paths.destinationPath = 'distgulp';
@@ -27,7 +27,14 @@ var paths = {
                utils.getPath('node_modules', 'jquery', 'dist', 'jquery.min.map'),
                utils.getPath('node_modules', 'bootstrap-sass', 'assets', 'javascripts', 'bootstrap.min.js')
            ]
-        } 
+        },
+        pages: {
+            root: utils.getSourcePath('doc', '*.hbs'),
+            partials: utils.getSourcePath('doc', 'partials', '**/*.hbs'),
+            layouts: utils.getSourcePath('doc', 'layouts', 'default.hbs'),
+            helpers: utils.getSourcePath('doc', 'handlebars-helpers', '*.js'),
+            data: utils.getSourcePath('doc', 'data', '*.json'),
+        }
     },
    
     target: {
@@ -41,7 +48,8 @@ var paths = {
        doc: {
            js: utils.getTargetPath('js'),
            jsvendor: utils.getTargetPath('js', 'vendor')
-       }
+       },
+       pages: utils.getTargetPath()
     }
 }
 
@@ -64,7 +72,23 @@ gulp.task('sass', function () {
 
 gulp.task('assemble', ['assemble:pages']);
 
-gulp.task('assemble:pages', function() {});
+gulp.task('assemble:pages', function() {
+    return gulp.src([paths.source.pages.root])
+        .pipe($.assemble($._assemble, {
+            partials: [paths.source.pages.partials],
+            layout: [paths.source.pages.layouts],
+            helpers: [paths.source.pages.helpers],
+            flatten: true,
+            data: paths.source.pages.data,
+    
+            // Set the version number
+            version: '<%= pkg.version %>',
+    
+            // Name of the project
+            name: '<%= pkg.name %>',
+        }))
+        .pipe(gulp.dest(paths.target.pages));
+});
 
 gulp.task('copy', ['copy:assets', 'copy:doc']);
 
