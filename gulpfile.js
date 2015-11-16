@@ -40,6 +40,10 @@ gulp.task('watch:sass', function () {
 
 gulp.task('watch:doc');
 
+gulp.task('fileExists', function() {});
+
+gulp.task('jshint', function() {});
+
 gulp.task('compare', function() {
    return gulp.src('./dist/**/*.*')
         .pipe($.diff('./distgulp'))
