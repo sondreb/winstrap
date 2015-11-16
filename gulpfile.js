@@ -17,11 +17,19 @@ var paths = {
     source: {
         style:  path.join(__dirname, settings.source, 'scss', 'winstrap.scss'),
         styles:  path.join(__dirname, settings.source, '**/*.scss'),
+        assets: {
+            fonts: path.join(__dirname, settings.source, 'fonts/**/*.*'),
+            images: path.join(__dirname, settings.source, 'images/**/*.*')
+        }
     },
    
     target: {
        root: path.join(__dirname, settings.destination),
        styles: path.join(__dirname, settings.destination, 'css'),
+       assets: {
+           fonts: path.join(__dirname, settings.destination, 'fonts'),
+           images: path.join(__dirname, settings.destination, 'images') 
+       }
     }
     
 }
@@ -46,11 +54,16 @@ gulp.task('copy', ['copy:assets', 'copy:doc']);
 
 gulp.task('copy:assets', ['copy:assets:files']);
 
-gulp.task('copy:assets:files', function () {
-    
-    
-    
-    
+gulp.task('copy:assets:files', ['copy:assets:files:fonts', 'copy:assets:files:images']);
+
+gulp.task('copy:assets:files:fonts', function () {
+    return gulp.src(paths.source.assets.fonts)
+        .pipe(gulp.dest(paths.target.assets.fonts));
+});
+
+gulp.task('copy:assets:files:images', function () {
+    return gulp.src(paths.source.assets.images)
+        .pipe(gulp.dest(paths.target.assets.images));
 });
 
 gulp.task('copy:doc', ['copy:doc:files']);
